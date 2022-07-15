@@ -23,7 +23,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: dag-diamond-steps-
+  generateName: dag-diamond-error-test-
 spec:
   entrypoint: diamond
   templates:
@@ -66,4 +66,4 @@ spec:
         depends: "B && C"
         template: echo-thrice
         arguments:
-          parameters: [{name: message, value: D}]
+          parameters: [{name: message, value: P}]
