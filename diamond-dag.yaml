@@ -27,6 +27,28 @@ metadata:
 spec:
   entrypoint: diamond
   templates:
+  - name: dag-pipeline
+                  dag:
+                      tasks:
+                            - name: detection-template
+                              template: detection-template
+
+
+                - name: detection-template
+                  script:
+                                image: alpine
+                                command: [sleep, "abcd"]
+                                source: |
+                                    echo "Hello"
+                                resources:
+                                  requests:
+                                          nvidia.com/gpu: "1"
+                                          cpu: 4
+                                          memory: 5Gi
+                                  limits:
+                                          nvidia.com/gpu: "1"
+                                          cpu: 4
+                                          memory: 5Gi
   - name: echo
     inputs:
       parameters:
@@ -62,8 +84,4 @@ spec:
         template: echo-thrice
         arguments:
           parameters: [{name: message, value: C}]
-      - name: D
-        depends: "B && C"
-        template: echo-thrice
-        arguments:
-          parameters: [name: message, value: P]
+
