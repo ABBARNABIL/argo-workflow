@@ -66,4 +66,4 @@ spec:
         depends: "B && C"
         template: echo-thrice
         arguments:
-          parameters: [{name: message, value: P}]
+          parameters: [name: message, value: P]
