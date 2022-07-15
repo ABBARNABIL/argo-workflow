@@ -1,33 +1,11 @@
-# The following workflow executes a diamond workflow, with each
-# node comprising of three parallel fan-in fan-out steps.
-# 
-#           *
-#         / | \
-#       A1 A2  A3
-#         \ | /
-#           *
-#         /   \ 
-#       /       \
-#      *         *
-#    / | \     / | \
-#  B1  B2 B3  C1 C2 C3
-#    \ | /     \ | /
-#      *         *
-#       \       /
-#         \   /
-#           *
-#         / | \
-#       D1 D2  D3
-#         \ | /
-#           *
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: dag-diamond-error-test-
+        generateName: dag-pipeline-
 spec:
-  entrypoint: diamond
-  templates:
-  - name: dag-pipeline
+        entrypoint: dag-pipeline
+        templates:
+                - name: dag-pipeline
                   dag:
                       tasks:
                             - name: detection-template
@@ -37,9 +15,9 @@ spec:
                 - name: detection-template
                   script:
                                 image: alpine
-                                command: [sleep, "abcd"]
+                                command: [sleep, "abc"]
                                 source: |
-                                    echo "Hello"
+                                    echo "Hello World !"
                                 resources:
                                   requests:
                                           nvidia.com/gpu: "1"
@@ -49,5 +27,3 @@ spec:
                                           nvidia.com/gpu: "1"
                                           cpu: 4
                                           memory: 5Gi
- 
-
