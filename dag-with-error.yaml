@@ -53,7 +53,7 @@ spec:
         depends: "A"
         template: echo
         arguments:
-          parameters: [{name: message, value: "{inputs.parameters.message}}C"}]
+          parameters: [{name: message, value: "{{inputs.parameters.message}}C"}]
       - name: D
         depends: "B && C"
         template: echo
