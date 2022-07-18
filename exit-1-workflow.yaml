@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: hello-world-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+  annotations:
+    workflows.argoproj.io/description: |
+      This is a simple hello world example.
+      You can also run it in Python: https://couler-proj.github.io/couler/examples/#hello-world
+spec:
+  entrypoint: whalesay
+  onExit: exit-handler
+  templates:
+  - name: whalesay
+    container:
+      image: docker/whalesay:latest
+      command: [cowsay]
+      args: ["hello world"]
+  
+  - name: exit-handler
+    steps:
+     - - name: celebrate
+         template: celebrate
+         when: "{{workflow.status}} == Succeeded"
+       - name: cry
+         template: cry
+         when: "{{workflow.status}} != Succeeded"
+         
+  - name: celebrate
+    container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["echo hooray!"]
+  - name: cry
+    container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["echo boohoo!"]
+      
