@@ -8,11 +8,11 @@ spec:
     - name: archive-log-test
       steps:
         - - name: list-default-running-pods
-            template: default
+            template: kubectl
             arguments:
               parameters:
                 - name: namespace
-                  value: default
+                  value: argo
         - - name: list-kube-system-running-pods
             template: kubectl
             arguments:
