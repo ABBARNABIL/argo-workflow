@@ -18,7 +18,7 @@ spec:
       command: [cowsay]
       args: ["hello world"]
   
-  - name: exit-hander
+  - name: exit-handler
     steps:
      - - name: celebrate
          template: celebrate
