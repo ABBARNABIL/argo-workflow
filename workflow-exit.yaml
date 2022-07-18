@@ -8,7 +8,7 @@ spec:
     - name: archive-log-test
       steps:
         - - name: list-default-running-pods
-            template: argo
+            template: default
             arguments:
               parameters:
                 - name: namespace
