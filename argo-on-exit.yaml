@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: hello-world-
+  labels:
+    workflows.argoproj.io/archive-strategy: "false"
+  annotations:
+    workflows.argoproj.io/description: |
+      This is a simple hello world example.
+      You can also run it in Python: https://couler-proj.github.io/couler/examples/#hello-world
+spec:
+  entrypoint: whalesay
+  volumes:
+  - name: nfs-datastore
+    nfs:
+      server: NFS_SERVER
+      path: /data/workflow/log
+  onExit: exit-handler
+  templates:
+  - name: whalesay
+    container:
+      image: docker/whalesay:latest
+      command: [cowsay]
+      args: ["hello world"]
+
+
+  - name: exit-handler
+    container:
+      name: "kubectl"
+      image: lachlanevenson/k8s-kubectl:v1.23.2
+      command:
+        - sh
+        - -c
+        - |
+          kubectl get pods -l workflows.argoproj.io/workflow=${POD_NAME%-*} \
+          --sort-by=".metadata.creationTimestamp" -o name | grep -v ${POD_NAME} \
+          | xargs -I {} -t kubectl logs {} -c main >> ${LOG_PATH}/${POD_NAME%-*}.log          
+      env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: LOG_PATH
+          value: /var/log/workflow
+      resources: {}
+      volumeMounts:
+        - name: nfs-datastore
+          mountPath: /var/log/workflow
+    retryStrategy:
+      limit: "5"
+      retryPolicy: OnFailure
+         
