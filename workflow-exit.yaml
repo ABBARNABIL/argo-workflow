@@ -2,13 +2,13 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   generateName: archive-log-test-
-  namespace: default
+  namespace: argo
 spec:
   templates:
     - name: archive-log-test
       steps:
         - - name: list-default-running-pods
-            template: kubectl
+            template: argo
             arguments:
               parameters:
                 - name: namespace
