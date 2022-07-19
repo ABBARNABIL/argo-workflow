@@ -7,6 +7,7 @@ metadata:
   generateName: output-artifact-s3-
 spec:
   entrypoint: whalesay
+  archiveLogs: true
   templates:
   - name: whalesay
     container:
