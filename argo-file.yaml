@@ -23,6 +23,8 @@ spec:
         # uploaded, as S3 does not support the concept/file mode of symlinks.
         # archive:
         #   none: {}
+      - name: main-log
+        path: /tmp
 
         s3:
           # Use the corresponding endpoint depending on your S3 provider:
