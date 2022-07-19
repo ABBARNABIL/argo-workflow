@@ -24,7 +24,7 @@ spec:
         # archive:
         #   none: {}
       - name: main-log
-        path: /tmp
+        path: /var/log
 
         s3:
           # Use the corresponding endpoint depending on your S3 provider:
@@ -42,7 +42,7 @@ spec:
           # As a best practice, .tgz or .tar.gz should be suffixed into the key name so the
           # resulting object has an accurate file extension and mime-type. If archive is set to
           # 'none', then preserve the appropriate file extension for the key name
-          key: path/in/bucket/hello_world.txt.tgz
+          
 
           # accessKeySecret and secretKeySecret are secret selectors. It references the k8s secret
           # named 'my-s3-credentials'. This secret is expected to have have the keys 'accessKey'
