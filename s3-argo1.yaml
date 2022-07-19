@@ -5,8 +5,8 @@ metadata:
 spec:
   entrypoint: artifact-example
   artifactRepositoryRef:
-    configMap: 
-      name: workflow-controller-configmap
+    configMap: workflow-controller-configmap
+    key: config
   podGC:
     strategy: OnPodSuccess
   templates:
