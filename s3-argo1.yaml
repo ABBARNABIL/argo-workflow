@@ -4,9 +4,6 @@ metadata:
   generateName: artifact-passing-
 spec:
   entrypoint: artifact-example
-  artifactRepositoryRef:
-    configMap: workflow-controller-configmap
-    key: config
   podGC:
     strategy: OnPodSuccess
   templates:
